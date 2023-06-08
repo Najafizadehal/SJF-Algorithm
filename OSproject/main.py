@@ -26,4 +26,12 @@ def sjf(processes):
     print(f":میانگین زمان برگشت{avg_turnaround_time}")
 
 def generate_random_processes(num_processes):
+    processes = []
+    for i in range(num_processes):
+        pid = i + 1
+        arrival_time = random.randint(0, 10)
+        burst_time = random.randint (1, 20)
+        processes.append(Process(pid, arrival_time, burst_time))
+
+        return processes
 
