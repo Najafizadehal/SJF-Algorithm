@@ -15,4 +15,15 @@ def sjf(processes):
         else:
             processes[i].waiting_time = max(0, processes[i-1].waiting_time + processes[i-1].burst_time - processes[i].arrival_time)
             processes[i].turnaround_time = processes[i].waiting_time + processes[i].burst_time
-            
+
+    print("PID\tavviral time\tburst time\twaiting time\tturnaround time")
+
+    for i in range (len(processes)):
+        print(f"{processes[i].pid}\t{processes[i].avviral_time}\t\t{processes[i].burst_time}\t\t{processes[i].waiting_time}\t\t{processes[i].turnaround_time}")
+
+    avg_waiting_time, avg_turnaround_time = calculate_metrics(processes)
+    print(f":میانگین زمان انتظار{avg_waiting_time}")
+    print(f":میانگین زمان برگشت{avg_turnaround_time}")
+
+def generate_random_processes(num_processes):
+
