@@ -21,7 +21,15 @@ def sjf(processes):
         print(f"{processes[i].pid}\t{processes[i].arrival_time}\t\t{processes[i].burst_time}\t\t{processes[i].waiting_time}\t\t{processes[i].turnaround_time}")
     avg_waiting_time, avg_turnaround_time = calculate_metrics(processes)
     print(f"میانگین زمان انتظار: {avg_waiting_time}")
-    print(f"میانگین زمان بازگشت: {avg_turnaround_time}")
+    print(f"میانگین زمان برگشت: {avg_turnaround_time}")
+
+    cpu_utilization = calculate_cpu_utilization(processes)
+    throughput = calculate_throughput(processes)
+    avg_response_time = calculate_avg_response_time(processes)
+
+    print(f"بهره‌وری CPU: {cpu_utilization:.2f}%")
+    print(f"توان عملیاتی: {throughput:.2f} فرآیند/ثانیه")
+    print(f"میانگین زمان پاسخ: {avg_response_time:.2f} ثانیه")
 
 def generate_random_processes(num_processes):
     processes = []
@@ -50,9 +58,20 @@ def calculate_metrics(processes):
     return avg_waiting_time, avg_turnaround_time
 
 def calculate_cpu_utilization(processes):
-    total_burst_time = sum([processes.burst_time for Process in processes])
-    total_time = max([Process.arrival_time + Process.burst_time for Process in processes])
-    cpu_utilization = ()
+    total_burst_time = sum([process.burst_time for process in processes])
+    total_time = max([process.arrival_time + process.burst_time for process in processes])
+    cpu_utilization = (total_burst_time / total_time) * 100
+    return cpu_utilization
+
+def calculate_throughput(processes):
+    total_time = max([process.arrival_time + process.burst_time for process in processes])
+    throughput = len(processes) / total_time
+    return throughput
+
+def calculate_avg_response_time(processes):
+    total_response_time = sum([process.waiting_time for process in processes])
+    avg_response_time = total_response_time / len(processes)
+    return avg_response_time
 
 def main():
     print("روش ورودی جدول فرآیندها را انتخاب کنید:")
