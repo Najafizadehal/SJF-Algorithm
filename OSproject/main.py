@@ -49,6 +49,11 @@ def calculate_metrics(processes):
     avg_turnaround_time = total_turnaround_time / len(processes)
     return avg_waiting_time, avg_turnaround_time
 
+def calculate_cpu_utilization(processes):
+    total_burst_time = sum([processes.burst_time for Process in processes])
+    total_time = max([Process.arrival_time + Process.burst_time for Process in processes])
+    cpu_utilization = ()
+
 def main():
     print("روش ورودی جدول فرآیندها را انتخاب کنید:")
     print("1. جدول فرآینده تصادفی")
