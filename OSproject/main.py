@@ -20,16 +20,16 @@ def sjf(processes):
     for i in range(len(processes)):
         print(f"{processes[i].pid}\t{processes[i].arrival_time}\t\t{processes[i].burst_time}\t\t{processes[i].waiting_time}\t\t{processes[i].turnaround_time}")
     avg_waiting_time, avg_turnaround_time = calculate_metrics(processes)
-    print(f"میانگین زمان انتظار: {avg_waiting_time}")
-    print(f"میانگین زمان برگشت: {avg_turnaround_time}")
+    print(f"avg_waiting_time: {avg_waiting_time}")
+    print(f"avg_turnaround_time: {avg_turnaround_time}")
 
     cpu_utilization = calculate_cpu_utilization(processes)
     throughput = calculate_throughput(processes)
     avg_response_time = calculate_avg_response_time(processes)
 
-    print(f"بهره‌وری CPU: {cpu_utilization:.2f}%")
-    print(f"توان عملیاتی: {throughput:.2f} فرآیند/ثانیه")
-    print(f"میانگین زمان پاسخ: {avg_response_time:.2f} ثانیه")
+    print(f"cpu_utilization: {cpu_utilization:.2f}%")
+    print(f"throughput: {throughput:.2f}")
+    print(f"avg_response_time: {avg_response_time:.2f}")
 
 def generate_random_processes(num_processes):
     processes = []
@@ -41,12 +41,12 @@ def generate_random_processes(num_processes):
     return processes
 
 def get_user_processes():
-    num_processes = int(input("تعداد فرآیندها را وارد کنید: "))
+    num_processes = int(input("number of process: "))
     processes = []
     for i in range(num_processes):
         pid = i + 1
-        arrival_time = int(input(f"زمان ورود فرآیند {pid} را وارد کنید: "))
-        burst_time = int(input(f"زمان اجرای فرآیند {pid} را وارد کنید: "))
+        arrival_time = int(input(f"Enter arrival_time : {pid}"))
+        burst_time = int(input(f"Enter burst_time : {pid} "))
         processes.append(Process(pid, arrival_time, burst_time))
     return processes
 
@@ -74,22 +74,22 @@ def calculate_avg_response_time(processes):
     return avg_response_time
 
 def main():
-    print("روش ورودی جدول فرآیندها را انتخاب کنید:")
-    print("1. جدول فرآینده تصادفی")
-    print("2. ورودی دستی فرآیندها")
-    choice = int(input("انتخاب خود را وارد کنید (1 یا 2): "))
+    print("Select the input method of the tables:")
+    print("1. Random process table")
+    print("2. Manual entry of processes")
+    choice = int(input("Enter your choice (1 or 2): "))
 
     if choice == 1:
-        num_processes = int(input("تعداد فرآیندها را وارد کنید: "))
+        num_processes = int(input("Enter the number of processes: "))
         processes = generate_random_processes(num_processes)
-        print("جدول فرآیندهای تصادفی:")
+        print("Table of random processes:")
         print("PID\tArrival Time\tBurst Time")
         for process in processes:
             print(f"{process.pid}\t{process.arrival_time}\t\t{process.burst_time}")
     elif choice == 2:
         processes = get_user_processes()
     else:
-        print("انتخاب نامعتبر. خروج.")
+        print("Invalid selection. Exit.")
         return
 
     sjf(processes)
